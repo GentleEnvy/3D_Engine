@@ -20,31 +20,31 @@ public class Transform {
         4, 4
     );
 
-    public void setScaleX(double scaleX) {
+    public void modifyScaleX(double scaleX) {
         scale.set(
             0, 0,
             scale.get(0, 0) * scaleX
         );
     }
 
-    public void setScaleY(double scaleY) {
+    public void modifyScaleY(double scaleY) {
         scale.set(
             1, 1,
             scale.get(1, 1) * scaleY
         );
     }
 
-    public void setScaleZ(double scaleZ) {
+    public void modifyScaleZ(double scaleZ) {
         scale.set(
             2, 2,
             scale.get(2, 2) * scaleZ
         );
     }
 
-    public void setScale(double scale) {
-        setScaleX(scale);
-        setScaleY(scale);
-        setScaleZ(scale);
+    public void modifyScale(double scale) {
+        modifyScaleX(scale);
+        modifyScaleY(scale);
+        modifyScaleZ(scale);
     }
 
     public Pixel convert(Point point) {
