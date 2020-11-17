@@ -1,2 +1,4 @@
 # Project exclude paths
 /target/
+Task_4.iml
+/.idea
