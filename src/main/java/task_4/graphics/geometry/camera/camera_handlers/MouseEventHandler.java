@@ -2,11 +2,10 @@ package task_4.graphics.geometry.camera.camera_handlers;
 
 import javafx.event.Event;
 import javafx.scene.input.MouseEvent;
-import task_4.graphics.geometry.camera.BaseCameraEventHandler;
 import task_4.graphics.geometry.camera.Camera;
 
 
-public class MouseEventHandler extends BaseCameraEventHandler {
+public class MouseEventHandler extends Camera.CameraEventHandler {
     public MouseEventHandler(Camera camera) {
         super(camera);
     }

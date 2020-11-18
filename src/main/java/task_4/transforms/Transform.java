@@ -49,20 +49,24 @@ public class Transform {
 
     public Transform modify(Transform transform) {
         Transform copiedTransform = copy();
-        this.translate = copyMatrix(transform.translate);
-        this.rotate = copyMatrix(transform.rotate);
-        this.scale = copyMatrix(transform.scale);
-        this.projection = copyMatrix(transform.projection);
+        this.translate = this.translate.multiply(transform.translate);
+        this.rotate = this.rotate.multiply(transform.rotate);
+        this.scale = this.scale.multiply(transform.scale);
+        this.projection = this.projection.multiply(transform.projection);
         return copiedTransform;
     }
 
     private Transform copy() {
         Transform copiedTransform = new Transform();
-        copiedTransform.translate = copyMatrix(this.translate);
-        copiedTransform.rotate = copyMatrix(this.rotate);
-        copiedTransform.scale = copyMatrix(this.scale);
-        copiedTransform.projection = copyMatrix(this.projection);
+        copiedTransform.copyOf(this);
         return copiedTransform;
+    }
+
+    public void copyOf(Transform transform) {
+        this.translate = copyMatrix(transform.translate);
+        this.rotate = copyMatrix(transform.rotate);
+        this.scale = copyMatrix(transform.scale);
+        this.projection = copyMatrix(transform.projection);
     }
 
     private NumberMatrix copyMatrix(NumberMatrix matrix) {

@@ -1,12 +1,9 @@
 package task_4.graphics.scane;
 
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import task_4.graphics.geometry.points.Pixel;
-import task_4.graphics.geometry.points.Point;
 import task_4.graphics.lighting.ColorLight;
 
 import java.util.Arrays;
