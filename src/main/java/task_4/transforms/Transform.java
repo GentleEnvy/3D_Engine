@@ -47,6 +47,39 @@ public class Transform {
         modifyScaleZ(scale);
     }
 
+    public Transform modify(Transform transform) {
+        Transform copiedTransform = copy();
+        this.translate = copyMatrix(transform.translate);
+        this.rotate = copyMatrix(transform.rotate);
+        this.scale = copyMatrix(transform.scale);
+        this.projection = copyMatrix(transform.projection);
+        return copiedTransform;
+    }
+
+    private Transform copy() {
+        Transform copiedTransform = new Transform();
+        copiedTransform.translate = copyMatrix(this.translate);
+        copiedTransform.rotate = copyMatrix(this.rotate);
+        copiedTransform.scale = copyMatrix(this.scale);
+        copiedTransform.projection = copyMatrix(this.projection);
+        return copiedTransform;
+    }
+
+    private NumberMatrix copyMatrix(NumberMatrix matrix) {
+        NumberMatrix copiedMatrix = NumberMatrix.createZeroMatrix(
+            4, 4
+        );
+        for (int i = 0; i < 4; ++i) {
+            for (int j = 0; j < 4; ++j) {
+                copiedMatrix.set(
+                    i, j,
+                    matrix.get(i, j)
+                );
+            }
+        }
+        return copiedMatrix;
+    }
+
     public Pixel convert(Point point) {
         NumberVector vector = NumberVector.createZeroVector(4);
         vector.set(0, point.getX());

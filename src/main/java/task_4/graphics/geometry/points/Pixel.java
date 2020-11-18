@@ -11,18 +11,18 @@ public class Pixel {
 
     private final int x;
     private final int y;
-    private final int z;
+    private final double depth;
     private final ColorLight color;
 
-    public Pixel(int x, int y, int z, ColorLight color) {
+    public Pixel(int x, int y, double depth, ColorLight color) {
         this.x = x;
         this.y = y;
-        this.z = z;
+        this.depth = depth;
         this.color = color;
     }
 
-    public Pixel(int x, int y, int z) {
-        this(x, y, z, DEFAULT_COLOR);
+    public Pixel(int x, int y, double depth) {
+        this(x, y, depth, DEFAULT_COLOR);
     }
 
     public int getX() {
@@ -33,8 +33,8 @@ public class Pixel {
         return y;
     }
 
-    public int getZ() {
-        return z;
+    public double getDepth() {
+        return depth;
     }
 
     public ColorLight getColor() {

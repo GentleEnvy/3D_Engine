@@ -16,19 +16,19 @@ public class Scene extends Pane {
 
     {
         setOnMousePressed(mouseEvent -> {
-            camera.handleMouseEvent(mouseEvent);
+            camera.handleEvent(mouseEvent);
             render();
         });
         setOnMouseReleased(mouseEvent -> {
-            camera.handleMouseEvent(mouseEvent);
+            camera.handleEvent(mouseEvent);
             render();
         });
         setOnMouseDragged(mouseEvent -> {
-            camera.handleMouseEvent(mouseEvent);
+            camera.handleEvent(mouseEvent);
             render();
         });
         setOnScroll(mouseEvent -> {
-            camera.handleMouseEvent(mouseEvent);
+            camera.handleEvent(mouseEvent);
             render();
         });
     }

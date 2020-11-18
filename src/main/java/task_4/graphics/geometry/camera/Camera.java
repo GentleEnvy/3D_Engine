@@ -1,11 +1,9 @@
 package task_4.graphics.geometry.camera;
 
 import javafx.event.Event;
-import javafx.scene.input.MouseEvent;
 import task_4.transforms.Transform;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
