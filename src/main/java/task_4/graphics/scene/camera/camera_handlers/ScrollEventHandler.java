@@ -1,12 +1,15 @@
-package task_4.graphics.geometry.camera.camera_handlers;
+package task_4.graphics.scene.camera.camera_handlers;
 
 import javafx.event.Event;
 import javafx.scene.input.ScrollEvent;
-import task_4.graphics.geometry.camera.Camera;
+
+import task_4.graphics.scene.camera.Camera;
 import task_4.transforms.Transform;
 
 
-public class ScrollEventHandler extends Camera.CameraEventHandler {
+public class ScrollEventHandler
+    extends Camera.CameraEventHandler
+{
     private static final double DEFAULT_SPEED_SCALE = 0.03;
 
     private final double speedScale;

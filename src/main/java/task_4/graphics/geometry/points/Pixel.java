@@ -40,4 +40,41 @@ public class Pixel {
     public ColorLight getColor() {
         return color;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Pixel)) {
+            return false;
+        }
+
+        Pixel pixel = (Pixel) o;
+
+        if (getX() != pixel.getX()) {
+            return false;
+        }
+        if (getY() != pixel.getY()) {
+            return false;
+        }
+        if (Double.compare(pixel.getDepth(), getDepth()) != 0) {
+            return false;
+        }
+        return getColor() != null
+            ? getColor().equals(pixel.getColor())
+            : pixel.getColor() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = getX();
+        result = 31 * result + getY();
+        temp = Double.doubleToLongBits(getDepth());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (getColor() != null ? getColor().hashCode() : 0);
+        return result;
+    }
 }

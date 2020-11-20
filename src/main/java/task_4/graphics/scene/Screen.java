@@ -1,4 +1,4 @@
-package task_4.graphics.scane;
+package task_4.graphics.scene;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -35,6 +35,7 @@ public class Screen
 
     public void setPixel(Pixel pixel) {
         try {
+            System.out.println(pixel.getX() + " " + pixel.getY());
             ColorLight colorLight = pixel.getColor();
             writableImage.getPixelWriter().setColor(
                 pixel.getX(), pixel.getY(),

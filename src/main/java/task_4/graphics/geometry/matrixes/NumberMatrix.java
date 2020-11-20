@@ -51,11 +51,12 @@ public class NumberMatrix
 
         NumberMatrix zeroMatrix = createZeroMatrix(
             getNumberRows(),
-            getNumberColumns()
+            matrix.getNumberColumns()
         );
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                for (int k = 0; k < 4; k++) {
+
+        for (int i = 0; i < getNumberRows(); i++) {
+            for (int j = 0; j < matrix.getNumberColumns(); j++) {
+                for (int k = 0; k < matrix.getNumberRows(); k++) {
                     zeroMatrix.set(
                         i, j,
                         zeroMatrix.get(i, j) + this.get(i, k) * matrix.get(k, j)
@@ -63,6 +64,7 @@ public class NumberMatrix
                 }
             }
         }
+
         return zeroMatrix;
     }
 }

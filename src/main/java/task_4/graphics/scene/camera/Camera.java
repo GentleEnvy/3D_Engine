@@ -1,25 +1,33 @@
-package task_4.graphics.geometry.camera;
+package task_4.graphics.scene.camera;
 
 import javafx.event.Event;
 import task_4.graphics.geometry.points.Pixel;
 import task_4.graphics.geometry.points.Point;
+import task_4.graphics.scene.PointConverter;
 import task_4.transforms.Transform;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 
-public class Camera {
+public class Camera
+    implements PointConverter
+{
     private final Set<CameraEventHandler> eventHandlers = new HashSet<>();
     private final Transform transform = new Transform();
 
-    public Camera(CameraEventHandler ...eventHandlers) {
+    public Camera(Collection<CameraEventHandler> eventHandlers) {
+        this.eventHandlers.addAll(eventHandlers);
+    }
+
+    public Camera(CameraEventHandler... eventHandlers) {
         this.eventHandlers.addAll(Arrays.asList(eventHandlers));
     }
 
     public void addEventHandler(CameraEventHandler eventHandler) {
-        eventHandlers.add(eventHandler);
+        this.eventHandlers.add(eventHandler);
     }
 
     public void handleEvent(Event event) {

@@ -4,9 +4,12 @@ import task_4.graphics.geometry.matrixes.NumberMatrix;
 import task_4.graphics.geometry.matrixes.NumberVector;
 import task_4.graphics.geometry.points.Pixel;
 import task_4.graphics.geometry.points.Point;
+import task_4.graphics.scene.PointConverter;
 
 
-public class Transform {
+public class Transform
+    implements PointConverter
+{
     private NumberMatrix translate = NumberMatrix.createIdentityMatrix(
         4, 4
     );
@@ -90,7 +93,7 @@ public class Transform {
         vector.set(1, point.getY());
         vector.set(2, point.getZ());
         vector.set(3, 1);
-        NumberMatrix pixelMatrix = projection.multiply(
+        NumberVector pixelVector = NumberVector.fromMatrix(projection.multiply(
             translate.multiply(
                 rotate.multiply(
                     scale.multiply(
@@ -98,17 +101,11 @@ public class Transform {
                     )
                 )
             )
-        );
+        ));
         return new Pixel(
-            (int) Math.round(
-                pixelMatrix.get(0, 0) / pixelMatrix.get(0, 3)
-            ),
-            (int) Math.round(
-                pixelMatrix.get(0, 1) / pixelMatrix.get(0, 3)
-            ),
-            (int) Math.round(
-                pixelMatrix.get(0, 2) / pixelMatrix.get(0, 3)
-            )
+            (int) Math.round(pixelVector.get(0) / pixelVector.get(3)),
+            (int) Math.round(pixelVector.get(1) / pixelVector.get(3)),
+            (int) Math.round(pixelVector.get(2) / pixelVector.get(3))
         );
     }
 }
