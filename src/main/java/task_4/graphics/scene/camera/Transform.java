@@ -21,42 +21,80 @@ public class Transform {
     );
 
     public void modifyTranslateX(double translateX) {
-        translate.set(0, 3, translateX);
+        modifyTranslate(translateX, 0);
     }
 
     public void modifyTranslateY(double translateY) {
-        translate.set(1, 3, translateY);
+        modifyTranslate(translateY, 1);
     }
 
     public void modifyTranslateZ(double translateZ) {
-        translate.set(2, 3, translateZ);
+        modifyTranslate(translateZ, 2);
+    }
+
+    private void modifyTranslate(double translate, int axis) {
+        NumberMatrix modifier = NumberMatrix.createIdentityMatrix(
+            4, 4
+        );
+        modifier.set(axis, 3, translate);
+        this.translate = modifier.multiply(this.translate);
+    }
+
+    public void modifyRotateX(double angleX) {
+        modifyRotate(angleX, 0);
+    }
+
+    public void modifyRotateY(double angleY) {
+        modifyRotate(angleY, 1);
+    }
+
+    public void modifyRotateZ(double angleZ) {
+        modifyRotate(angleZ, 2);
+    }
+
+    private void modifyRotate(double angle, int axis) {
+        NumberMatrix modifier = NumberMatrix.createIdentityMatrix(
+            4, 4
+        );
+        int a1 = (axis + 1) % 3;
+        int a2 = (axis + 2) % 3;
+
+        modifier.set(a1, a1, Math.cos(angle));
+        modifier.set(a1, a2, Math.sin(angle));
+        modifier.set(a2, a1, -Math.sin(angle));
+        modifier.set(a2, a2, Math.cos(angle));
+
+        this.rotate = modifier.multiply(this.rotate);
     }
 
     public void modifyScaleX(double scaleX) {
-        scale.set(
-            0, 0,
-            scale.get(0, 0) * scaleX
-        );
+        modifyScale(scaleX, 0);
     }
 
     public void modifyScaleY(double scaleY) {
-        scale.set(
-            1, 1,
-            scale.get(1, 1) * scaleY
-        );
+        modifyScale(scaleY, 1);
     }
 
     public void modifyScaleZ(double scaleZ) {
-        scale.set(
-            2, 2,
-            scale.get(2, 2) * scaleZ
-        );
+        modifyScale(scaleZ, 2);
     }
 
     public void modifyScale(double scale) {
-        modifyScaleX(scale);
-        modifyScaleY(scale);
-        modifyScaleZ(scale);
+        NumberMatrix modifier = NumberMatrix.createIdentityMatrix(
+            4, 4
+        );
+        modifier.set(0, 0, scale);
+        modifier.set(1, 1, scale);
+        modifier.set(2, 2, scale);
+        this.scale = modifier.multiply(this.scale);
+    }
+
+    private void modifyScale(double scale, int axis) {
+        NumberMatrix modifier = NumberMatrix.createIdentityMatrix(
+            4, 4
+        );
+        modifier.set(axis, axis, scale);
+        this.scale = modifier.multiply(this.scale);
     }
 
     public Transform modify(Transform transform) {
