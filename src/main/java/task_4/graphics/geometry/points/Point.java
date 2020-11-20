@@ -1,7 +1,5 @@
 package task_4.graphics.geometry.points;
 
-import task_4.graphics.geometry.matrixes.NumberVector;
-
 
 public class Point {
     private final double x;

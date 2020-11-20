@@ -1,15 +1,12 @@
-package task_4.transforms;
+package task_4.graphics.scene.camera;
 
 import task_4.graphics.geometry.matrixes.NumberMatrix;
 import task_4.graphics.geometry.matrixes.NumberVector;
 import task_4.graphics.geometry.points.Pixel;
 import task_4.graphics.geometry.points.Point;
-import task_4.graphics.scene.PointConverter;
 
 
-public class Transform
-    implements PointConverter
-{
+public class Transform {
     private NumberMatrix translate = NumberMatrix.createIdentityMatrix(
         4, 4
     );

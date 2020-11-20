@@ -1,41 +1,37 @@
 package task_4.graphics.scene;
 
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+
 import task_4.graphics.geometry.points.Pixel;
 import task_4.graphics.lighting.ColorLight;
 
-import java.util.Arrays;
-
 
 public class Screen
-    extends ImageView
+    extends Pane
 {
     private final WritableImage writableImage;
-    private final double[][] pixelDepths;
 
     public Screen(int screenWidth, int screenHeight) {
         super();
         writableImage = new WritableImage(screenWidth, screenHeight);
-        setImage(writableImage);
-        pixelDepths = new double[screenHeight][screenWidth];
-        for (double[] pixelDepthsRow : pixelDepths) {
-            Arrays.fill(pixelDepthsRow, Double.NEGATIVE_INFINITY);
-        }
+        ImageView imageView = new ImageView(writableImage);
+        getChildren().add(imageView);
     }
 
-    public int getWidth() {
+    public int getScreenWidth() {
         return (int) writableImage.getWidth();
     }
 
-    public int getHeight() {
+    public int getScreenHeight() {
         return (int) writableImage.getHeight();
     }
 
     public void setPixel(Pixel pixel) {
         try {
-            System.out.println(pixel.getX() + " " + pixel.getY());
             ColorLight colorLight = pixel.getColor();
             writableImage.getPixelWriter().setColor(
                 pixel.getX(), pixel.getY(),
@@ -48,6 +44,10 @@ public class Screen
         } catch (IndexOutOfBoundsException e) {
             //
         }
+    }
+
+    public void fromFxNode(Node node) {
+        getChildren().add(node);
     }
 
     public boolean isOut(Pixel pixel) {

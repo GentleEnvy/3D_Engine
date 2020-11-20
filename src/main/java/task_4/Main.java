@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import task_4.graphics.graphic_objects.models.Box;
+import task_4.graphics.graphic_objects.model.Box;
 import task_4.graphics.scene.Scene;
 
 

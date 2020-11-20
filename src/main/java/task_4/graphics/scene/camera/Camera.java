@@ -4,7 +4,6 @@ import javafx.event.Event;
 import task_4.graphics.geometry.points.Pixel;
 import task_4.graphics.geometry.points.Point;
 import task_4.graphics.scene.PointConverter;
-import task_4.transforms.Transform;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -36,14 +35,17 @@ public class Camera
         }
     }
 
+    @Override
     public Pixel convert(Point point) {
         return transform.convert(point);
     }
 
-    public Transform modifyTransform(Transform transform) {
+    @Override
+    public Transform modify(Transform transform) {
         return this.transform.modify(transform);
     }
 
+    @Override
     public void comeBack(Transform transform) {
         this.transform.copyOf(transform);
     }

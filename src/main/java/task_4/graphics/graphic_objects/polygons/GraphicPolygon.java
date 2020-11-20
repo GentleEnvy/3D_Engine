@@ -1,5 +1,6 @@
 package task_4.graphics.graphic_objects.polygons;
 
+import javafx.scene.shape.Polygon;
 import task_4.graphics.geometry.points.Pixel;
 import task_4.graphics.geometry.points.Point;
 import task_4.graphics.scene.PointConverter;
@@ -36,6 +37,17 @@ public class GraphicPolygon
             sumDepth += pixel.getDepth();
         }
         return sumDepth / pixels.size();
+    }
+
+    public Polygon toFx() {
+        Polygon fxPolygon = new Polygon();
+        for (Pixel pixel : pixels) {
+            fxPolygon.getPoints().addAll(
+                (double) pixel.getX(),
+                (double) pixel.getY()
+            );
+        }
+        return fxPolygon;
     }
 
     @Override

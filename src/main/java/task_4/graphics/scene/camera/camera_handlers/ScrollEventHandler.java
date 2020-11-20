@@ -4,7 +4,7 @@ import javafx.event.Event;
 import javafx.scene.input.ScrollEvent;
 
 import task_4.graphics.scene.camera.Camera;
-import task_4.transforms.Transform;
+import task_4.graphics.scene.camera.Transform;
 
 
 public class ScrollEventHandler

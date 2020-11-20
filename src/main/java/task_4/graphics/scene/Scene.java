@@ -1,13 +1,8 @@
 package task_4.graphics.scene;
 
-
 import javafx.scene.layout.Pane;
-import task_4.graphics.graphic_objects.models.Model;
-import task_4.graphics.graphic_objects.polygons.GraphicPolygon;
-import task_4.graphics.graphic_objects.polygons.RealPolygon;
-import task_4.graphics.graphic_objects.primitives.GraphicPrimitive;
+import task_4.graphics.graphic_objects.model.Model;
 import task_4.graphics.scene.camera.Camera;
-import task_4.transforms.Transform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +56,7 @@ public class Scene
             getHeight() <= 0 ? DEFAULT_SCREEN_HEIGHT : (int) getHeight()
         );
 
-        // TODO: render models
+        // TODO: render model
 
         mainPane.getChildren().add(screen);
     }

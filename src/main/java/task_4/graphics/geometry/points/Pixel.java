@@ -1,6 +1,5 @@
 package task_4.graphics.geometry.points;
 
-import task_4.graphics.geometry.matrixes.NumberVector;
 import task_4.graphics.lighting.ColorLight;
 
 
