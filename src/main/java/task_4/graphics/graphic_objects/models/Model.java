@@ -1,4 +1,4 @@
-package task_4.graphics.graphic_objects.model;
+package task_4.graphics.graphic_objects.models;
 
 import task_4.graphics.graphic_objects.polygons.GraphicPolygon;
 import task_4.graphics.scene.PointConverter;

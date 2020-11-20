@@ -1,9 +1,12 @@
 package task_4.graphics.scene;
 
 import javafx.scene.layout.Pane;
-import task_4.graphics.graphic_objects.model.Model;
+import task_4.graphics.geometry.points.Pixel;
+import task_4.graphics.graphic_objects.models.Model;
 import task_4.graphics.graphic_objects.polygons.GraphicPolygon;
+import task_4.graphics.lighting.ColorLight;
 import task_4.graphics.scene.camera.Camera;
+import task_4.graphics.scene.camera.Transform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +15,8 @@ import java.util.List;
 public class Scene
     extends javafx.scene.Scene
 {
-    private static final int DEFAULT_SCREEN_WIDTH = 1920;
-    private static final int DEFAULT_SCREEN_HEIGHT = 1080;
+    private static final int DEFAULT_SCREEN_WIDTH = 1536;
+    private static final int DEFAULT_SCREEN_HEIGHT = 810;
 
     private final Pane mainPane;
     private final List<Model> models = new ArrayList<>();
@@ -57,6 +60,11 @@ public class Scene
             getHeight() <= 0 ? DEFAULT_SCREEN_HEIGHT : (int) getHeight()
         );
 
+        Transform defaultTransform = new Transform();
+        defaultTransform.modifyTranslateX(screen.getScreenWidth() / 2.0);
+        defaultTransform.modifyTranslateY(screen.getScreenHeight() / 2.0);
+        Transform oldTransform = camera.modify(defaultTransform);
+
         List<GraphicPolygon> polygons = new ArrayList<>();
         for (Model model : models) {
             polygons.addAll(model.getPolygons(camera));
@@ -65,6 +73,8 @@ public class Scene
         for (GraphicPolygon polygon : polygons) {
             screen.fromFxNode(polygon.toFxPolygon());
         }
+
+        camera.comeBack(oldTransform);
 
         mainPane.getChildren().add(screen);
     }

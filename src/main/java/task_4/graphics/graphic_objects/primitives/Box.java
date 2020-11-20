@@ -2,6 +2,7 @@ package task_4.graphics.graphic_objects.primitives;
 
 import task_4.graphics.geometry.points.Point;
 import task_4.graphics.graphic_objects.polygons.RealPolygon;
+import task_4.graphics.lighting.ColorLight;
 
 import java.util.Set;
 
@@ -32,13 +33,16 @@ public class Box extends GraphicPrimitive {
         Point bbl = new Point(-w, -h, d);  // back bottom left
         Point bbr = new Point(w, -h, d);  // back bottom right
 
-        return Set.of(
-            new RealPolygon(ftl, ftr, fbr, fbl),  // front
-            new RealPolygon(ftl, ftr, btr, btl),  // top
-            new RealPolygon(fbl, fbr, bbr, bbl),  // bottom
-            new RealPolygon(ftl, btl, bbl, fbl),  // left
-            new RealPolygon(ftr, btr, bbr, fbr),  // right
-            new RealPolygon(btl, btr, bbr, bbl)  // behind
-        );
+        RealPolygon front = new RealPolygon(ftl, ftr, fbr, fbl);
+        RealPolygon top = new RealPolygon(ftl, ftr, btr, btl);
+        RealPolygon bottom = new RealPolygon(fbl, fbr, bbr, bbl);
+        RealPolygon left = new RealPolygon(ftl, btl, bbl, fbl);
+        RealPolygon right = new RealPolygon(ftr, btr, bbr, fbr);
+        RealPolygon behind = new RealPolygon(btl, btr, bbr, bbl);
+
+        front.setColor(new ColorLight(255, 0, 0));
+        front.setFill(false);
+
+        return Set.of(front, top, bottom, left, right, behind);
     }
 }

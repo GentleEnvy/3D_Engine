@@ -3,12 +3,9 @@ package task_4.graphics.graphic_objects.polygons;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import task_4.graphics.geometry.points.Pixel;
-import task_4.graphics.geometry.points.Point;
 import task_4.graphics.lighting.ColorLight;
-import task_4.graphics.scene.PointConverter;
 
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -16,6 +13,10 @@ public class GraphicPolygon
     implements Comparable<GraphicPolygon>
 {
     private final List<Pixel> pixels;
+
+    public List<Pixel> getPixels() {
+        return pixels;
+    }
 
     private boolean isFill = true;
     private ColorLight color = new ColorLight(0, 0, 0);

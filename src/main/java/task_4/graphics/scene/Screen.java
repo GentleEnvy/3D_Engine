@@ -1,5 +1,6 @@
 package task_4.graphics.scene;
 
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -19,6 +20,9 @@ public class Screen
         super();
         writableImage = new WritableImage(screenWidth, screenHeight);
         ImageView imageView = new ImageView(writableImage);
+        setMinSize(screenWidth, screenHeight);
+        setMaxSize(screenWidth, screenHeight);
+        setStyle("-fx-border-color: red");
         getChildren().add(imageView);
     }
 

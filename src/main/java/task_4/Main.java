@@ -18,10 +18,9 @@ public class Main
     @Override
     public void start(Stage stage) {
         Scene scene = new Scene(new Pane());
-        scene.addModel(new Box(1920, 500, 100));
+        scene.addModel(new Box(960, 100, 100));
         scene.render();
 
-        stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
     }

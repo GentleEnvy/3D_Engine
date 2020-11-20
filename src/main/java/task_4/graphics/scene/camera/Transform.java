@@ -20,6 +20,18 @@ public class Transform {
         4, 4
     );
 
+    public void modifyTranslateX(double translateX) {
+        translate.set(0, 3, translateX);
+    }
+
+    public void modifyTranslateY(double translateY) {
+        translate.set(1, 3, translateY);
+    }
+
+    public void modifyTranslateZ(double translateZ) {
+        translate.set(2, 3, translateZ);
+    }
+
     public void modifyScaleX(double scaleX) {
         scale.set(
             0, 0,

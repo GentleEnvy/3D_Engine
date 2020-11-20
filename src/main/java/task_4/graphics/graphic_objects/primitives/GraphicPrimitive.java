@@ -1,6 +1,6 @@
 package task_4.graphics.graphic_objects.primitives;
 
-import task_4.graphics.graphic_objects.model.Model;
+import task_4.graphics.graphic_objects.models.Model;
 import task_4.graphics.graphic_objects.polygons.GraphicPolygon;
 import task_4.graphics.graphic_objects.polygons.RealPolygon;
 import task_4.graphics.scene.PointConverter;
