@@ -2,6 +2,7 @@ package task_4.graphics.scene;
 
 import javafx.scene.layout.Pane;
 import task_4.graphics.graphic_objects.model.Model;
+import task_4.graphics.graphic_objects.polygons.GraphicPolygon;
 import task_4.graphics.scene.camera.Camera;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class Scene
         mainPane = pane;
     }
 
-    public void addGraphic(Model model) {
+    public void addModel(Model model) {
         models.add(model);
     }
 
@@ -56,7 +57,14 @@ public class Scene
             getHeight() <= 0 ? DEFAULT_SCREEN_HEIGHT : (int) getHeight()
         );
 
-        // TODO: render model
+        List<GraphicPolygon> polygons = new ArrayList<>();
+        for (Model model : models) {
+            polygons.addAll(model.getPolygons(camera));
+        }
+        polygons.sort(GraphicPolygon::compareTo);
+        for (GraphicPolygon polygon : polygons) {
+            screen.fromFxNode(polygon.toFxPolygon());
+        }
 
         mainPane.getChildren().add(screen);
     }

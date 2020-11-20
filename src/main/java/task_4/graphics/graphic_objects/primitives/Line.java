@@ -7,30 +7,46 @@ import java.util.Arrays;
 import java.util.Set;
 
 
-public class Line extends GraphicPrimitive {
+public class Line
+    extends GraphicPrimitive
+{
+    public static final double DEFAULT_STROKE = 1;
+
     private final Point start;
     private final Point end;
+    private final double stroke;
 
-    public Line(Point start, Point end) {
+    public Line(Point start, Point end, double stroke) {
         this.start = start;
         this.end = end;
+        this.stroke = stroke;
+    }
+
+    public Line(Point start, Point end) {
+        this(start, end, DEFAULT_STROKE);
     }
 
     @Override
     public Set<RealPolygon> getPolygons() {
+        double halfStroke = stroke / 2;
         return Set.of(new RealPolygon(Arrays.asList(
-            start,
             new Point(
-                start.getX() + 1,
-                start.getY() + 1,
+                start.getX() - halfStroke,
+                start.getY() - halfStroke,
                 start.getZ()
             ),
             new Point(
-                end.getX() + 1,
-                end.getY() + 1,
-                end.getZ()
-            ),
-            end
+                start.getX() + halfStroke,
+                start.getY() + halfStroke,
+                start.getZ()),
+            new Point(
+                end.getX() + halfStroke,
+                end.getY() + halfStroke,
+                end.getZ()),
+            new Point(
+                end.getX() - halfStroke,
+                end.getY() - halfStroke,
+                end.getZ())
         )));
     }
 }

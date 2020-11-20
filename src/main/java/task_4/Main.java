@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import task_4.graphics.graphic_objects.model.Box;
+import task_4.graphics.graphic_objects.primitives.Box;
 import task_4.graphics.scene.Scene;
 
 
@@ -18,7 +18,7 @@ public class Main
     @Override
     public void start(Stage stage) {
         Scene scene = new Scene(new Pane());
-        scene.addGraphic(new Box(100, 100, 100));
+        scene.addModel(new Box(1920, 500, 100));
         scene.render();
 
         stage.setMaximized(true);

@@ -17,7 +17,7 @@ abstract public class GraphicPrimitive
     public final List<GraphicPolygon> getPolygons(PointConverter converter) {
         List<GraphicPolygon> graphicPolygons = new LinkedList<>();
         for (RealPolygon realPolygon : getPolygons()) {
-            graphicPolygons.add(GraphicPolygon.fromReal(realPolygon, converter));
+            graphicPolygons.add(realPolygon.toGraphic(converter));
         }
         return graphicPolygons;
     }
