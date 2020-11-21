@@ -5,8 +5,6 @@ import task_4.graphics.geometry.points.Pixel;
 import task_4.graphics.geometry.points.Point;
 import task_4.graphics.scene.PointConverter;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 

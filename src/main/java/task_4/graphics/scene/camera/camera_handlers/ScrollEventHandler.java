@@ -4,7 +4,6 @@ import javafx.event.Event;
 import javafx.scene.input.ScrollEvent;
 
 import task_4.graphics.scene.camera.Camera;
-import task_4.graphics.scene.camera.Transform;
 
 
 public class ScrollEventHandler
@@ -27,10 +26,9 @@ public class ScrollEventHandler
     protected void handle(Event event) {
         if (event instanceof ScrollEvent) {
             ScrollEvent scrollEvent = (ScrollEvent) event;
-            int ticks = (int) -scrollEvent.getDeltaY() / 32;
+            int ticks = (int) scrollEvent.getDeltaY() / 32;
             double k = ticks <= 0 ? 1 - speedScale : 1 + speedScale;
-            Transform transform = getCameraTransform();
-            transform.modifyScale(k * Math.pow(k, Math.abs(ticks)));
+            getCameraTransform().modifyScale(k * Math.pow(k, Math.abs(ticks)));
         }
     }
 }

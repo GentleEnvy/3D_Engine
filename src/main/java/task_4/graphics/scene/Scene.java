@@ -1,67 +1,47 @@
 package task_4.graphics.scene;
 
 import javafx.scene.layout.Pane;
-import task_4.graphics.geometry.points.Pixel;
 import task_4.graphics.graphic_objects.models.Model;
 import task_4.graphics.graphic_objects.polygons.GraphicPolygon;
-import task_4.graphics.lighting.ColorLight;
 import task_4.graphics.scene.camera.Camera;
 import task_4.graphics.scene.camera.Transform;
 import task_4.graphics.scene.camera.camera_handlers.MouseEventHandler;
+import task_4.graphics.scene.camera.camera_handlers.ScrollEventHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Scene {
+public class Scene
+    extends Pane
+{
     private static final int DEFAULT_SCREEN_WIDTH = 1536;
     private static final int DEFAULT_SCREEN_HEIGHT = 810;
 
-    private final Pane pane = new Pane();
     private final List<Model> models = new ArrayList<>();
     private final Camera camera = new Camera();
 
     {
         camera.addEventHandler(new MouseEventHandler(camera));
+        camera.addEventHandler(new ScrollEventHandler(camera));
     }
 
     {
-//        setOnMousePressed(mouseEvent -> {
-//            camera.handleEvent(mouseEvent);
-//            render();
-//        });
-//        setOnMouseReleased(mouseEvent -> {
-//            camera.handleEvent(mouseEvent);
-//            render();
-//        });
-//        setOnMouseDragged(mouseEvent -> {
-//            System.out.println(mouseEvent);
-//            camera.handleEvent(mouseEvent);
-//            render();
-//        });
-//
-//        setOnScroll(mouseEvent -> {
-//            camera.handleEvent(mouseEvent);
-//            render();
-//        });
+        setOnMousePressed(camera::handleEvent);
+        setOnMouseDragged(mouseEvent -> {
+            camera.handleEvent(mouseEvent);
+            render();
+        });
+        setOnMouseReleased(camera::handleEvent);
+
+        setOnScroll(mouseEvent -> {
+            camera.handleEvent(mouseEvent);
+            render();
+        });
     }
 
     public Scene() {
-        pane.setOnMousePressed(mouseEvent -> {
-            camera.handleEvent(mouseEvent);
-        });
-        pane.setOnMouseDragged(mouseEvent -> {
-            camera.handleEvent(mouseEvent);
-            render();
-        });
-        pane.setOnMouseReleased(mouseEvent -> {
-            camera.handleEvent(mouseEvent);
-        });
-
-        pane.setOnScroll(mouseEvent -> {
-            camera.handleEvent(mouseEvent);
-            render();
-        });
+        super();
     }
 
     public void addModel(Model model) {
@@ -69,11 +49,11 @@ public class Scene {
     }
 
     public void render() {
-        pane.getChildren().clear();
+        getChildren().clear();
 
         Screen screen = new Screen(
-            pane.getWidth() <= 0 ? DEFAULT_SCREEN_WIDTH : (int) pane.getWidth(),
-            pane.getHeight() <= 0 ? DEFAULT_SCREEN_HEIGHT : (int) pane.getHeight()
+            getWidth() <= 0 ? DEFAULT_SCREEN_WIDTH : (int) getWidth(),
+            getHeight() <= 0 ? DEFAULT_SCREEN_HEIGHT : (int) getHeight()
         );
 
         Transform defaultTransform = new Transform();
@@ -94,10 +74,6 @@ public class Scene {
 
         camera.comeBack(oldTransform);
 
-        pane.getChildren().add(screen);
-    }
-
-    public Pane getPane() {
-        return pane;
+        getChildren().add(screen);
     }
 }

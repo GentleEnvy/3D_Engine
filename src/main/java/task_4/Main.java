@@ -24,7 +24,7 @@ public class Main
         scene.addModel(box);
         scene.render();
 
-        stage.setScene(new javafx.scene.Scene(scene.getPane()));
+        stage.setScene(new javafx.scene.Scene(scene));
         stage.show();
     }
 }
