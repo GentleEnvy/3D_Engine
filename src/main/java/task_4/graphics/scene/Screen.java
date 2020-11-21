@@ -22,7 +22,6 @@ public class Screen
         ImageView imageView = new ImageView(writableImage);
         setMinSize(screenWidth, screenHeight);
         setMaxSize(screenWidth, screenHeight);
-        setStyle("-fx-border-color: red");
         getChildren().add(imageView);
     }
 

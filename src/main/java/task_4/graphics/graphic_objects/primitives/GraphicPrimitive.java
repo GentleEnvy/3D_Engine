@@ -1,8 +1,10 @@
 package task_4.graphics.graphic_objects.primitives;
 
+import task_4.graphics.graphic_objects.BaseGraphic;
 import task_4.graphics.graphic_objects.models.Model;
 import task_4.graphics.graphic_objects.polygons.GraphicPolygon;
 import task_4.graphics.graphic_objects.polygons.RealPolygon;
+import task_4.graphics.lighting.ColorLight;
 import task_4.graphics.scene.PointConverter;
 import task_4.graphics.scene.camera.Transform;
 
@@ -12,22 +14,32 @@ import java.util.Set;
 
 
 abstract public class GraphicPrimitive
-    extends Model
+    extends BaseGraphic
 {
+    private ColorLight color = null;
+    private Boolean isFill = null;
+
     @Override
-    public final List<GraphicPolygon> getPolygons(PointConverter converter) {
+    protected final List<GraphicPolygon> _getPolygons(PointConverter converter) {
         List<GraphicPolygon> graphicPolygons = new LinkedList<>();
-        Transform transform = converter.modify(getTransform());
         for (RealPolygon realPolygon : getPolygons()) {
+            if (color != null) {
+                realPolygon.setColor(color);
+            }
+            if (isFill != null) {
+                realPolygon.setFill(isFill);
+            }
             graphicPolygons.add(realPolygon.toGraphic(converter));
         }
-        converter.comeBack(transform);
         return graphicPolygons;
     }
 
-    @Override
-    protected final Set<Model> getChildren() {
-        return Set.of();
+    public void setColor(ColorLight color) {
+        this.color = color;
+    }
+
+    public void setFill(boolean isFill) {
+        this.isFill = isFill;
     }
 
     abstract public Set<RealPolygon> getPolygons();

@@ -32,8 +32,8 @@ public class RealPolygon {
         return isFill;
     }
 
-    public void setFill(boolean fill) {
-        isFill = fill;
+    public void setFill(boolean isFill) {
+        this.isFill = isFill;
     }
 
     public ColorLight getColor() {

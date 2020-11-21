@@ -165,7 +165,7 @@ public class Transform {
     public Pixel convert(Point point) {
         NumberVector vector = NumberVector.createZeroVector(4);
         vector.set(0, point.getX() + offsetX);
-        vector.set(1, point.getY() + offsetY);
+        vector.set(1, -point.getY() - offsetY);
         vector.set(2, point.getZ() + offsetZ);
         vector.set(3, 1);
         NumberVector pixelVector = NumberVector.fromMatrix(

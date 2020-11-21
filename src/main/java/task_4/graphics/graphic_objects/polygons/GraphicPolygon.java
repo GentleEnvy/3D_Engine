@@ -1,7 +1,9 @@
 package task_4.graphics.graphic_objects.polygons;
 
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Polyline;
 import task_4.graphics.geometry.points.Pixel;
 import task_4.graphics.lighting.ColorLight;
 
@@ -49,15 +51,24 @@ public class GraphicPolygon
         return sumDepth / pixels.size();
     }
 
-    public Polygon toFxPolygon() {
+    public Node toFx() {
         Polygon fxPolygon = new Polygon();
+        Color fxColor = getColor().toFxColor();
+        if (pixels.size() == 2) {
+            Polyline polyline = new Polyline(
+                pixels.get(0).getX(), pixels.get(0).getY(),
+                pixels.get(1).getX(), pixels.get(1).getY()
+            );
+            polyline.setStroke(fxColor);
+            return polyline;
+        }
+
         for (Pixel pixel : pixels) {
             fxPolygon.getPoints().addAll(
                 (double) pixel.getX(),
                 (double) pixel.getY()
             );
         }
-        Color fxColor = getColor().toFxColor();
         if (isFill) {
             fxPolygon.setFill(fxColor);
         } else {

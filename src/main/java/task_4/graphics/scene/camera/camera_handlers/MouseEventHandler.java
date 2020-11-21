@@ -4,6 +4,7 @@ import javafx.event.Event;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import task_4.graphics.geometry.points.Pixel;
+import task_4.graphics.geometry.points.Point;
 import task_4.graphics.scene.camera.Camera;
 
 
@@ -12,7 +13,7 @@ public class MouseEventHandler
 {
     private static final double SPEED_DRAG = 1;
     private static final double SPEED_ROTATE_X = 1;
-    private static final double SPEED_ROTATE_Y = 0.5;
+    private static final double SPEED_ROTATE_Y = 1;
 
     private final TranslateHandler translateHandler = new TranslateHandler();
     private final RotateHandler rotateHandler = new RotateHandler();
@@ -46,12 +47,12 @@ public class MouseEventHandler
     }
 
     private class RotateHandler {
-        private Pixel prevDrag = null;
+        private Point prevDrag = null;
 
         void handlePressed(MouseEvent mouseEvent) {
-            prevDrag = new Pixel(
-                (int) mouseEvent.getX(),
-                (int) mouseEvent.getY(),
+            prevDrag = new Point(
+                mouseEvent.getX(),
+                mouseEvent.getY(),
                 0
             );
         }
@@ -66,22 +67,22 @@ public class MouseEventHandler
                 double dy = mouseEvent.getY() - prevDrag.getY();
                 getCameraTransform().modifyRotateXZ(-dx * SPEED_ROTATE_X);
                 getCameraTransform().modifyRotateYZ(-dy * SPEED_ROTATE_Y);
-                prevDrag = new Pixel(
-                    (int) mouseEvent.getX(),
-                    (int) mouseEvent.getY(),
-                    0
-                );
             }
+            prevDrag = new Point(
+                mouseEvent.getX(),
+                mouseEvent.getY(),
+                0
+            );
         }
     }
 
     private class TranslateHandler {
-        private Pixel prevDrag = null;
+        private Point prevDrag = null;
 
         void handlePressed(MouseEvent mouseEvent) {
-            prevDrag = new Pixel(
-                (int) mouseEvent.getX(),
-                (int) mouseEvent.getY(),
+            prevDrag = new Point(
+                mouseEvent.getX(),
+                mouseEvent.getY(),
                 0
             );
         }
@@ -91,22 +92,22 @@ public class MouseEventHandler
         }
 
         void handleDragged(MouseEvent mouseEvent) {
-            Pixel delta;
-            Pixel current = new Pixel(
-                (int) mouseEvent.getX(),
-                (int) mouseEvent.getY(),
+            Point delta;
+            Point current = new Point(
+                mouseEvent.getX(),
+                mouseEvent.getY(),
                 0
             );
             if (prevDrag != null) {
-                delta = new Pixel(
-                    (int) ((current.getX() - prevDrag.getX()) * SPEED_DRAG),
-                    (int) ((current.getY() - prevDrag.getY()) * SPEED_DRAG),
+                delta = new Point(
+                    (current.getX() - prevDrag.getX()) * SPEED_DRAG,
+                    (current.getY() - prevDrag.getY()) * SPEED_DRAG,
                     0
                 );
                 getCameraTransform().modifyTranslateX(delta.getX());
                 getCameraTransform().modifyTranslateY(-delta.getY());
-                prevDrag = current;
             }
+            prevDrag = current;
         }
     }
 }
