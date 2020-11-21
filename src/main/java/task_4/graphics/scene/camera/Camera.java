@@ -17,14 +17,6 @@ public class Camera
     private final Set<CameraEventHandler> eventHandlers = new HashSet<>();
     private final Transform transform = new Transform();
 
-    public Camera(Collection<CameraEventHandler> eventHandlers) {
-        this.eventHandlers.addAll(eventHandlers);
-    }
-
-    public Camera(CameraEventHandler... eventHandlers) {
-        this.eventHandlers.addAll(Arrays.asList(eventHandlers));
-    }
-
     public void addEventHandler(CameraEventHandler eventHandler) {
         this.eventHandlers.add(eventHandler);
     }

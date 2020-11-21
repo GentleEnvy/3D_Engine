@@ -41,7 +41,11 @@ public class Box extends GraphicPrimitive {
         RealPolygon behind = new RealPolygon(btl, btr, bbr, bbl);
 
         front.setColor(new ColorLight(255, 0, 0));
-        front.setFill(false);
+        top.setColor(new ColorLight(0, 255, 0));
+        bottom.setColor(new ColorLight(0, 0, 255));
+        left.setColor(new ColorLight(255, 255, 255));
+        right.setColor(new ColorLight(0, 0, 0));
+        behind.setColor(new ColorLight(123, 123, 123));
 
         return Set.of(front, top, bottom, left, right, behind);
     }

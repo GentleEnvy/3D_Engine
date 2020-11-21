@@ -17,11 +17,14 @@ public class Main
 
     @Override
     public void start(Stage stage) {
-        Scene scene = new Scene(new Pane());
-        scene.addModel(new Box(960, 100, 100));
+        Scene scene = new Scene();
+
+        Box box = new Box(300, 100, 200);
+
+        scene.addModel(box);
         scene.render();
 
-        stage.setScene(scene);
+        stage.setScene(new javafx.scene.Scene(scene.getPane()));
         stage.show();
     }
 }

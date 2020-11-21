@@ -59,10 +59,12 @@ public class Transform {
         int a1 = (axis + 1) % 3;
         int a2 = (axis + 2) % 3;
 
-        modifier.set(a1, a1, Math.cos(angle));
-        modifier.set(a1, a2, Math.sin(angle));
-        modifier.set(a2, a1, -Math.sin(angle));
-        modifier.set(a2, a2, Math.cos(angle));
+        double radians = Math.toRadians(angle);
+
+        modifier.set(a1, a1, Math.cos(radians));
+        modifier.set(a1, a2, Math.sin(radians));
+        modifier.set(a2, a1, -Math.sin(radians));
+        modifier.set(a2, a2, Math.cos(radians));
 
         this.rotate = modifier.multiply(this.rotate);
     }
