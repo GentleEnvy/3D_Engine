@@ -22,7 +22,7 @@ abstract public class Model {
         return polygons;
     }
 
-    protected final Transform getTransform() {
+    public final Transform getTransform() {
         return transform;
     }
 

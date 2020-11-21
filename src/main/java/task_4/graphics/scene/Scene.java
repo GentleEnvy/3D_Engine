@@ -1,6 +1,9 @@
 package task_4.graphics.scene;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import task_4.graphics.graphic_objects.models.Model;
 import task_4.graphics.graphic_objects.polygons.GraphicPolygon;
 import task_4.graphics.scene.camera.Camera;
@@ -58,9 +61,7 @@ public class Scene
 
         Transform defaultTransform = new Transform();
         defaultTransform.modifyTranslateX(screen.getScreenWidth() / 2.0);
-        defaultTransform.modifyTranslateY(screen.getScreenHeight() / 2.0);
-        defaultTransform.modifyRotateX(30);
-        defaultTransform.modifyRotateY(-10);
+        defaultTransform.modifyTranslateY(-screen.getScreenHeight() / 2.0);
         Transform oldTransform = camera.modify(defaultTransform);
 
         List<GraphicPolygon> polygons = new ArrayList<>();

@@ -4,7 +4,7 @@ import task_4.graphics.geometry.points.Point;
 import task_4.graphics.graphic_objects.polygons.RealPolygon;
 import task_4.graphics.lighting.ColorLight;
 
-import java.util.Set;
+import java.util.*;
 
 
 public class Box extends GraphicPrimitive {
@@ -12,10 +12,25 @@ public class Box extends GraphicPrimitive {
     private final double height;
     private final double depth;
 
+    private final List<ColorLight> colors = new ArrayList<>();
+
     public Box(double width, double height, double depth) {
         this.width = width;
         this.height = height;
         this.depth = depth;
+
+        for (int i = 0; i < 6; ++i) {
+            colors.add(getRandomColor());
+        }
+    }
+
+    private ColorLight getRandomColor() {
+        Random random = new Random();
+        return new ColorLight(
+            random.nextInt(255),
+            random.nextInt(255),
+            random.nextInt(255)
+        );
     }
 
     @Override
@@ -40,12 +55,12 @@ public class Box extends GraphicPrimitive {
         RealPolygon right = new RealPolygon(ftr, btr, bbr, fbr);
         RealPolygon behind = new RealPolygon(btl, btr, bbr, bbl);
 
-        front.setColor(new ColorLight(255, 0, 0));
-        top.setColor(new ColorLight(0, 255, 0));
-        bottom.setColor(new ColorLight(0, 0, 255));
-        left.setColor(new ColorLight(255, 255, 255));
-        right.setColor(new ColorLight(0, 0, 0));
-        behind.setColor(new ColorLight(123, 123, 123));
+        front.setColor(colors.get(0));
+        top.setColor(colors.get(1));
+        bottom.setColor(colors.get(2));
+        left.setColor(colors.get(3));
+        right.setColor(colors.get(4));
+        behind.setColor(colors.get(5));
 
         return Set.of(front, top, bottom, left, right, behind);
     }
