@@ -180,9 +180,9 @@ public class Transform {
             )
         );
         return new Pixel(
-            (int) Math.round(pixelVector.get(0) / pixelVector.get(3)),
-            (int) Math.round(pixelVector.get(1) / pixelVector.get(3)),
-            (int) Math.round(pixelVector.get(2) / pixelVector.get(3))
+            pixelVector.get(0) / pixelVector.get(3),
+            pixelVector.get(1) / pixelVector.get(3),
+            pixelVector.get(2) / pixelVector.get(3)
         );
     }
 }

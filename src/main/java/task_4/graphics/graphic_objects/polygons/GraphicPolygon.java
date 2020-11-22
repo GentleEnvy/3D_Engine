@@ -73,8 +73,8 @@ public class GraphicPolygon
             fxPolygon.setFill(fxColor);
         } else {
             fxPolygon.setFill(Color.TRANSPARENT);
-            fxPolygon.setStroke(fxColor);
         }
+        fxPolygon.setStroke(fxColor);
         return fxPolygon;
     }
 
@@ -82,6 +82,7 @@ public class GraphicPolygon
     public int compareTo(GraphicPolygon graphicPolygon) {
         double selfAvg = this.getAverageDepth();
         double otherAvg = graphicPolygon.getAverageDepth();
+
         if (selfAvg == otherAvg) {
             return 0;
         }

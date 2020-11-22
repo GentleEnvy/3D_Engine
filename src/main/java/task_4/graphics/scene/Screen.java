@@ -37,7 +37,7 @@ public class Screen
         try {
             ColorLight colorLight = pixel.getColor();
             writableImage.getPixelWriter().setColor(
-                pixel.getX(), pixel.getY(),
+                (int) pixel.getX(), (int) pixel.getY(),
                 Color.rgb(
                     colorLight.getRed(),
                     colorLight.getGreen(),

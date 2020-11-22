@@ -8,27 +8,27 @@ public class Pixel {
         0, 0, 0
     );
 
-    private final int x;
-    private final int y;
+    private final double x;
+    private final double y;
     private final double depth;
     private final ColorLight color;
 
-    public Pixel(int x, int y, double depth, ColorLight color) {
+    public Pixel(double x, double y, double depth, ColorLight color) {
         this.x = x;
         this.y = y;
         this.depth = depth;
         this.color = color;
     }
 
-    public Pixel(int x, int y, double depth) {
+    public Pixel(double x, double y, double depth) {
         this(x, y, depth, DEFAULT_COLOR);
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -67,13 +67,13 @@ public class Pixel {
 
     @Override
     public int hashCode() {
-        int result;
+        double result;
         long temp;
         result = getX();
         result = 31 * result + getY();
         temp = Double.doubleToLongBits(getDepth());
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (getColor() != null ? getColor().hashCode() : 0);
-        return result;
+        return (int) result;
     }
 }

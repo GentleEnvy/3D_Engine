@@ -28,14 +28,21 @@ public class Main
         Scene scene = new Scene();
 
         Box box = new Box(100, 100, 100);
+        //Box floor = new Box(300, 10, 300);
 
         for (Box.DirectionSide directionSide : Box.DirectionSide.values()) {
             box.getSide(directionSide).setColor(getRandomColor());
         }
 
+        //floor.setFill(false);
+
+        //floor.getTransform().modifyOffsetY(-60);
+        //floor.setColor(new ColorLight(40, 150, 40));
+
         scene.setVisibleAxes(true);
 
-        scene.addModel(box);
+        scene.addGraphic(box);
+        //scene.addGraphic(floor);
 
         scene.render();
 

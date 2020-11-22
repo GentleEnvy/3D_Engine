@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import task_4.graphics.graphic_objects.BaseGraphic;
 import task_4.graphics.graphic_objects.models.Model;
 import task_4.graphics.graphic_objects.polygons.GraphicPolygon;
+import task_4.graphics.graphic_objects.polygons.Triangle;
 import task_4.graphics.graphic_objects.primitives.Line;
 import task_4.graphics.lighting.ColorLight;
 import task_4.graphics.scene.camera.Camera;
@@ -16,9 +17,12 @@ import task_4.graphics.scene.camera.camera_handlers.MouseEventHandler;
 import task_4.graphics.scene.camera.camera_handlers.ScrollEventHandler;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static task_4.Utils.getAxes;
+import static task_4.Utils.triangulation;
 
 
 public class Scene
@@ -76,17 +80,24 @@ public class Scene
         this.visibleAxes = visibleAxes;
     }
 
-    public ColorLight getBackgroundColor() {
-        return backgroundColor;
+    public void setBackgroundColor(ColorLight backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 
-    public void addGraphic(BaseGraphic model) {
-        graphics.add(model);
+    public void addGraphic(BaseGraphic graphic) {
+        graphics.add(graphic);
     }
 
     public void render() {
         getChildren().clear();
+        Screen screen = createScreen();
+        Transform oldTransform = toScreenCenter(screen);
+        render(screen);
+        camera.comeBack(oldTransform);
+        getChildren().add(screen);
+    }
 
+    private Screen createScreen() {
         Screen screen = new Screen(
             getWidth() <= 0 ? DEFAULT_SCREEN_WIDTH : (int) getWidth(),
             getHeight() <= 0 ? DEFAULT_SCREEN_HEIGHT : (int) getHeight()
@@ -94,35 +105,42 @@ public class Scene
         screen.setBackground(new Background(new BackgroundFill(
             backgroundColor.toFxColor(), CornerRadii.EMPTY, Insets.EMPTY
         )));
+        return screen;
+    }
 
+    private Transform toScreenCenter(Screen screen) {
         Transform defaultTransform = new Transform();
         defaultTransform.modifyTranslateX(screen.getScreenWidth() / 2.0);
         defaultTransform.modifyTranslateY(-screen.getScreenHeight() / 2.0);
-        Transform oldTransform = camera.modify(defaultTransform);
+        return camera.modify(defaultTransform);
+    }
 
-        List<GraphicPolygon> polygons = new ArrayList<>();
-        for (BaseGraphic model : graphics) {
-            polygons.addAll(model.getPolygons(camera));
+    private void drawAxes(Screen screen) {
+        for (Line axis : getAxes()) {
+            for (GraphicPolygon polygon : axis.getPolygons(camera)) {
+                screen.fromFxNode(polygon.toFx());
+            }
         }
-        polygons.sort(GraphicPolygon::compareTo);
+    }
+
+    private void render(Screen screen) {
+        Set<GraphicPolygon> polygons = new HashSet<>();
+        for (BaseGraphic graphic : graphics) {
+            polygons.addAll(graphic.getPolygons(camera));
+        }
+
+        List<Triangle> triangles = new ArrayList<>();
         for (GraphicPolygon polygon : polygons) {
-            screen.fromFxNode(polygon.toFx());
+            triangles.addAll(triangulation(polygon, 100));
+        }
+        triangles.sort(Triangle::compareTo);
+
+        for (Triangle triangle : triangles) {
+            screen.fromFxNode(triangle.toFx());
         }
 
         if (visibleAxes) {
-            for (Line axis : getAxes()) {
-                for (GraphicPolygon polygon : axis.getPolygons(camera)) {
-                    screen.fromFxNode(polygon.toFx());
-                }
-            }
+            drawAxes(screen);
         }
-
-        camera.comeBack(oldTransform);
-
-        getChildren().add(screen);
-    }
-
-    private List<GraphicPolygon> createBackground() {
-        return null;
     }
 }
