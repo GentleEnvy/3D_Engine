@@ -4,8 +4,10 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Polyline;
+import task_4.Utils;
 import task_4.graphics.geometry.points.Pixel;
 import task_4.graphics.lighting.ColorLight;
+import task_4.graphics.scene.Screen;
 
 import java.util.Collection;
 import java.util.List;
@@ -43,15 +45,11 @@ public class GraphicPolygon
         this.color = color;
     }
 
-    private double getAverageDepth() {
-        double sumDepth = 0;
-        for (Pixel pixel : pixels) {
-            sumDepth += pixel.getDepth();
-        }
-        return sumDepth / pixels.size();
+    public void render(Screen screen) {
+        screen.fromFxNode(toFx());
     }
 
-    public Node toFx() {
+    protected Node toFx() {
         Polygon fxPolygon = new Polygon();
         Color fxColor = getColor().toFxColor();
         if (pixels.size() == 2) {
@@ -65,8 +63,8 @@ public class GraphicPolygon
 
         for (Pixel pixel : pixels) {
             fxPolygon.getPoints().addAll(
-                (double) pixel.getX(),
-                (double) pixel.getY()
+                pixel.getX(),
+                pixel.getY()
             );
         }
         if (isFill) {
@@ -78,14 +76,20 @@ public class GraphicPolygon
         return fxPolygon;
     }
 
+    protected double getAverageDepth() {
+        double sumDepth = 0;
+        for (Pixel pixel : pixels) {
+            sumDepth += pixel.getDepth();
+        }
+        return sumDepth / pixels.size();
+    }
+
+    /**
+     @return 1, если данный полигон ближе; -1, если дальше; 0 если на одинаково расстоянии
+     от камеры
+     */
     @Override
     public int compareTo(GraphicPolygon graphicPolygon) {
-        double selfAvg = this.getAverageDepth();
-        double otherAvg = graphicPolygon.getAverageDepth();
-
-        if (selfAvg == otherAvg) {
-            return 0;
-        }
-        return selfAvg < otherAvg ? 1 : -1;
+        return Double.compare(graphicPolygon.getAverageDepth(), getAverageDepth());
     }
 }

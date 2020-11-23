@@ -7,11 +7,17 @@ public class ColorLight {
     private int red;
     private int green;
     private int blue;
+    private double opacity;
 
-    public ColorLight(int red, int green, int blue) {
+    public ColorLight(int red, int green, int blue, double opacity) {
         this.red = red;
         this.green = green;
         this.blue = blue;
+        this.opacity = opacity;
+    }
+
+    public ColorLight(int red, int green, int blue) {
+        this(red, green, blue, 1);
     }
 
     public int getRed() {
@@ -26,7 +32,15 @@ public class ColorLight {
         return blue;
     }
 
+    public double getOpacity() {
+        return opacity;
+    }
+
+    public void setOpacity(double opacity) {
+        this.opacity = opacity;
+    }
+
     public Color toFxColor() {
-        return Color.rgb(getRed(), getGreen(), getBlue());
+        return Color.rgb(getRed(), getGreen(), getBlue(), getOpacity());
     }
 }

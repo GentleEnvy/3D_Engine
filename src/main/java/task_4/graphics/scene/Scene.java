@@ -6,7 +6,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import task_4.graphics.graphic_objects.BaseGraphic;
-import task_4.graphics.graphic_objects.models.Model;
 import task_4.graphics.graphic_objects.polygons.GraphicPolygon;
 import task_4.graphics.graphic_objects.polygons.Triangle;
 import task_4.graphics.graphic_objects.primitives.Line;
@@ -16,10 +15,7 @@ import task_4.graphics.scene.camera.Transform;
 import task_4.graphics.scene.camera.camera_handlers.MouseEventHandler;
 import task_4.graphics.scene.camera.camera_handlers.ScrollEventHandler;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static task_4.Utils.getAxes;
 import static task_4.Utils.triangulation;
@@ -68,7 +64,7 @@ public class Scene
 //                    transform.modifyRotateXZ(1);
 //
 //                    camera.modify(transform);
-//                    render();
+//                    renderPolygons();
 //                }
 //            )
 //        );
@@ -92,7 +88,8 @@ public class Scene
         getChildren().clear();
         Screen screen = createScreen();
         Transform oldTransform = toScreenCenter(screen);
-        render(screen);
+        //renderPolygons(screen);
+        renderTriangle(screen);
         camera.comeBack(oldTransform);
         getChildren().add(screen);
     }
@@ -118,12 +115,28 @@ public class Scene
     private void drawAxes(Screen screen) {
         for (Line axis : getAxes()) {
             for (GraphicPolygon polygon : axis.getPolygons(camera)) {
-                screen.fromFxNode(polygon.toFx());
+                polygon.render(screen);
             }
         }
     }
 
-    private void render(Screen screen) {
+    private void renderPolygons(Screen screen) {
+        List<GraphicPolygon> polygons = new ArrayList<>();
+        for (BaseGraphic graphic : graphics) {
+            polygons.addAll(graphic.getPolygons(camera));
+        }
+
+        polygons.sort(GraphicPolygon::compareTo);
+        for (GraphicPolygon polygon : polygons) {
+            polygon.render(screen);
+        }
+
+        if (visibleAxes) {
+            drawAxes(screen);
+        }
+    }
+
+    private void renderTriangle(Screen screen) {
         Set<GraphicPolygon> polygons = new HashSet<>();
         for (BaseGraphic graphic : graphics) {
             polygons.addAll(graphic.getPolygons(camera));
@@ -131,12 +144,12 @@ public class Scene
 
         List<Triangle> triangles = new ArrayList<>();
         for (GraphicPolygon polygon : polygons) {
-            triangles.addAll(triangulation(polygon, 100));
+            triangles.addAll(triangulation(polygon, 70));
         }
-        triangles.sort(Triangle::compareTo);
+        triangles.sort(Comparator.reverseOrder());
 
         for (Triangle triangle : triangles) {
-            screen.fromFxNode(triangle.toFx());
+            triangle.render(screen);
         }
 
         if (visibleAxes) {

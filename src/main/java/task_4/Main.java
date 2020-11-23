@@ -1,17 +1,11 @@
 package task_4;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import javafx.util.Duration;
-import task_4.graphics.graphic_objects.models.Group;
 import task_4.graphics.graphic_objects.primitives.Box;
 import task_4.graphics.lighting.ColorLight;
 import task_4.graphics.scene.Scene;
-import task_4.graphics.scene.camera.Transform;
 
 import static task_4.Utils.getRandomColor;
 
@@ -27,26 +21,43 @@ public class Main
     public void start(Stage stage) {
         Scene scene = new Scene();
 
-        Box box = new Box(100, 100, 100);
-        //Box floor = new Box(300, 10, 300);
-
-        for (Box.DirectionSide directionSide : Box.DirectionSide.values()) {
-            box.getSide(directionSide).setColor(getRandomColor());
-        }
-
-        //floor.setFill(false);
-
-        //floor.getTransform().modifyOffsetY(-60);
-        //floor.setColor(new ColorLight(40, 150, 40));
+//        GraphicTriangle triangle1 = new GraphicTriangle(
+//            new Point(0, 1, 1),
+//            new Point(0, 1, 0),
+//            new Point(0, 0, 0)
+//        );
+//        triangle1.setColor(new ColorLight(0, 0, 0, 0.5));
+//        GraphicTriangle triangle2 = new GraphicTriangle(
+//            new Point(-1, 0, 0),
+//            new Point(0, 1, 0),
+//            new Point(0, 0, 0)
+//        );
+//        triangle2.setColor(new ColorLight(255, 0, 0, 0.5));
 
         scene.setVisibleAxes(true);
 
+        Box box = createBox();
+
+        Box floor = new Box(150, 1, 150);
+        floor.setColor(getRandomColor());
+        floor.getTransform().modifyRotateXY(45);
+
         scene.addGraphic(box);
-        //scene.addGraphic(floor);
+        scene.addGraphic(floor);
 
         scene.render();
 
         stage.setScene(new javafx.scene.Scene(scene));
         stage.show();
+    }
+
+    private static Box createBox() {
+        Box box = new Box(100, 70, 50);
+        for (Box.DirectionSide directionSide : Box.DirectionSide.values()) {
+            ColorLight randomColor = getRandomColor();
+            //randomColor.setOpacity(0.7);
+            box.getSide(directionSide).setColor(randomColor);
+        }
+        return box;
     }
 }

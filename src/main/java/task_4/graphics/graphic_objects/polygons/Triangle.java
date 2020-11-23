@@ -1,9 +1,8 @@
 package task_4.graphics.graphic_objects.polygons;
 
 import task_4.graphics.geometry.points.Pixel;
+import task_4.graphics.scene.Screen;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -60,6 +59,76 @@ public class Triangle
         triangle.setColor(polygon.getColor());
         triangle.setFill(polygon.isFill());
         return triangle;
+    }
+
+    @Override
+    public void render(Screen screen) {
+        class Render {
+            // cache
+            final double v1x = vertex1.getX();
+            final double v1y = vertex1.getY();
+            final double v2x = vertex2.getX();
+            final double v2y = vertex2.getY();
+            final double v3x = vertex3.getX();
+            final double v3y = vertex3.getY();
+
+            final double v23x = v2x - v3x;
+            final double v23y = v2y - v3y;
+            final double v31x = v3x - v1x;
+            final double v31y = v3y - v1y;
+            final double v12x = v1x - v2x;
+            final double v12y = v1y - v2y;
+
+            final double triangleArea = v23y * v31x - v31y * v23x;
+
+            final int minX = (int) Math.max(
+                0, Math.ceil(Math.min(v1x, Math.min(v2x, v3x)))
+            );
+            final int maxX = (int) Math.min(
+                screen.getScreenWidth() - 1, Math.floor(
+                    Math.max(v1x, Math.max(v2x, v3x))
+                )
+            );
+            final int minY = (int) Math.max(
+                0, Math.ceil(Math.min(v1y, Math.min(v2y, v3y)))
+            );
+            final int maxY = (int) Math.min(
+                screen.getScreenHeight() - 1, Math.floor(
+                    Math.max(v1y, Math.max(v2y, v3y))
+                )
+            );
+
+            void render() {
+                for (int y = minY; y <= maxY; y++) {
+                    for (int x = minX; x <= maxX; x++) {
+                        Double depth = calcPixelDepth(x, y);
+
+                        if (depth != null) {
+                            screen.setPixel(new Pixel(
+                                x, y, depth, getColor()
+                            ));
+                        }
+                    }
+                }
+            }
+
+            Double calcPixelDepth(double x, double y) {
+                double b1 = (v23x * (y - v3y) + v23y * (v3x - x)) / triangleArea;
+                double b2 = (v31x * (y - v1y) + v31y * (v1x - x)) / triangleArea;
+                double b3 = (v12x * (y - v2y) + v12y * (v2x - x)) / triangleArea;
+
+                if  (
+                    b1 >= 0 && b1 <= 1 && b2 >= 0 &&
+                        b2 <= 1 && b3 >= 0 && b3 <= 1
+                ) {
+                    return b1 * vertex1.getDepth()
+                        + b2 * vertex2.getDepth()
+                        + b3 * vertex3.getDepth();
+                }
+                return null;
+            }
+        }
+        new Render().render();
     }
 
     @Override

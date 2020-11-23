@@ -66,7 +66,7 @@ public class Utils {
             Triangle bigTriangle = bigTriangles.iterator().next();
             Set<Triangle> smallerTriangles = splitTriangle(bigTriangle);
             for (Triangle smallerTriangle : smallerTriangles) {
-                double area = areaCache.get(bigTriangle) / 4;
+                double area = areaCache.get(bigTriangle) / smallerTriangles.size();
                 if (area > minTriangleArea) {
                     bigTriangles.add(smallerTriangle);
                     areaCache.put(smallerTriangle, area);
@@ -92,8 +92,7 @@ public class Utils {
             new Triangle(middle1, middle2, middle3)
         ));
         for (Triangle smallerTriangle : smallerTriangles) {
-            smallerTriangle.setFill(triangle.isFill());
-            smallerTriangle.setColor(triangle.getColor());
+            setSettings(smallerTriangle, triangle);
             //smallerTriangle.setColor(getRandomColor()); FIXME
         }
         return smallerTriangles;
@@ -108,26 +107,29 @@ public class Utils {
     }
 
     private static Set<Triangle> splitPolygon(GraphicPolygon polygon) {
-        ColorLight color = polygon.getColor();
-        //ColorLight color = getRandomColor(); FIXME
-        boolean isFill = polygon.isFill();
         List<Pixel> pixels = polygon.getPixels();
         if (pixels.size() == 4) {
-            Triangle triangle1 = Triangle.fromPolygon(polygon);
 //            Triangle triangle1 = new Triangle(
 //                pixels.get(0), pixels.get(1), pixels.get(2)
 //            );
 //            triangle1.setColor(getRandomColor());
 //            triangle1.setFill(isFill); FIXME
-
-            Triangle triangle2 = new Triangle(
-                pixels.get(0), pixels.get(3), pixels.get(2)
+            Triangle triangle1 = new Triangle(
+                pixels.get(0), pixels.get(1), pixels.get(3)
             );
-            triangle2.setColor(color);
-            triangle2.setFill(isFill);
+            Triangle triangle2 = new Triangle(
+                pixels.get(1), pixels.get(2), pixels.get(3)
+            );
+            setSettings(triangle1, polygon);
+            setSettings(triangle2, polygon);
             return Set.of(triangle1, triangle2);
         } else {
             return Set.of(Triangle.fromPolygon(polygon));
         }
+    }
+
+    public static void setSettings(GraphicPolygon out, GraphicPolygon src) {
+        out.setColor(src.getColor());
+        out.setFill(src.isFill());
     }
 }
